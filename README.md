@@ -1,5 +1,5 @@
 # cpp-argparse
-A semi-faithful port of Python's argparse to C++
+A semi-faithful port of Python's argparse to C++ (still in progress)
 
 ## Documentation
 (This builds as low as C++11, I think)
