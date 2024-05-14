@@ -44,8 +44,6 @@ A setup for a multi-argument SOURCE, single-argument DEST program (`examples/exa
       }
     }
 
-    }
-
 Producing this output:
 
     source
