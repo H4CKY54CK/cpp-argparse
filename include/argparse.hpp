@@ -22,8 +22,6 @@ struct Argument {
 
 
 typedef std::unordered_map<std::string, std::vector<std::string>> ParsedResults;
-typedef unsigned long long ulonglong;
-typedef unsigned long ulong;
 
 
 
@@ -47,7 +45,7 @@ public:
 // Implementation
 
 bool is_number(const std::string& s) {
-  for (ulong i = 0; i < s.size(); i++) {
+  for (std::size_t i = 0; i < s.size(); i++) {
     if (!std::isdigit(s.at(i))) {
       return false;
     }
@@ -114,7 +112,7 @@ std::vector<std::string> ArgumentParser::read_values(const std::vector<std::stri
   std::vector<std::string> result;
   std::string arg = vec.at(0);
   Argument* option = &(optionals.at(arg));
-  for (ulong i = 1; i < vec.size(); i++) {
+  for (std::size_t i = 1; i < vec.size(); i++) {
     if (is_number(option->nargs)) {
       if (result.size() == std::stoul(option->nargs)) {
         break;
@@ -186,7 +184,7 @@ ParsedResults ArgumentParser::parse_args(int argc, char* const* argv) {
         // not how many we collected ever. aka action="append"
         r = read_values(params);
         results[optionals.at(arg).dest] = r;
-        for (ulong a = 0; a < r.size() + 1; a++) {
+        for (std::size_t a = 0; a < r.size() + 1; a++) {
           params.erase(params.begin());
         }
       }
@@ -205,7 +203,7 @@ ParsedResults ArgumentParser::parse_args(int argc, char* const* argv) {
 
 
   // Get the minimum required arguments and whether it needs to be exact or not
-  ulong total = 0;
+  std::size_t total = 0;
   bool exact = true;
   for (auto p: positionals) {
     if (is_number(p.nargs)) {
@@ -224,7 +222,7 @@ ParsedResults ArgumentParser::parse_args(int argc, char* const* argv) {
   std::string joined = "";
   if (exact) {
     if (remaining.size() > total) {
-      for (ulong s = total; s < remaining.size(); s++) {
+      for (std::size_t s = total; s < remaining.size(); s++) {
         joined += remaining.at(s);
         joined += ", ";
       }
@@ -250,7 +248,6 @@ ParsedResults ArgumentParser::parse_args(int argc, char* const* argv) {
   }
 
   // Figure out how to arrange the arguments
-  ulong one = 1;
   int known = 0;
   std::vector<std::string> layout;
   for (auto p: positionals) {
@@ -260,22 +257,22 @@ ParsedResults ArgumentParser::parse_args(int argc, char* const* argv) {
   }
 
   // Arrange the arguments
-  ulong ix = 0;
+  std::size_t ix = 0;
   for (auto p: positionals) {
     if (is_number(p.nargs)) {
-      for (ulong i = 0; i < std::stoul(p.nargs); i++) {
+      for (std::size_t i = 0; i < std::stoul(p.nargs); i++) {
         results[p.dest].push_back(remaining.at(ix));
         ix += 1;
       }
     }
     else if (p.nargs == "+" || p.nargs == "*") {
-      for (ulong i = 0; i < remaining.size() - known; i++) {
+      for (std::size_t i = 0; i < remaining.size() - known; i++) {
         results[p.dest].push_back(remaining.at(ix));
         ix += 1;
       }
     }
     else if (p.nargs == "?") {
-      for (ulong i = 0; i < std::min(remaining.size() - known, one); i++) {
+      for (std::size_t i = 0; i < std::min<std::size_t>(remaining.size() - known, 1); i++) {
         results[p.dest].push_back(remaining.at(ix));
         ix += 1;
       }
@@ -285,7 +282,7 @@ ParsedResults ArgumentParser::parse_args(int argc, char* const* argv) {
   // If not all arguments were consumed, then error (unsure if this can happen?)
   joined = "";
   if (ix < remaining.size()) {
-    for (ulong s = ix; s < remaining.size(); s++) {
+    for (std::size_t s = ix; s < remaining.size(); s++) {
       joined += remaining.at(s);
       joined += ", ";
     }

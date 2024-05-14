@@ -13,12 +13,12 @@ int main(int argc, char* argv[]) {
   ParsedResults results = parser.parse_args(argc, argv);
 
   std::cout << "source" << std::endl;
-  for (int i = 0; i < results["source"].size(); ++i) {
+  for (std::size_t i = 0; i < results["source"].size(); ++i) {
     std::cout << "  " << results["source"].at(i) << std::endl;
   }
 
   std::cout << "dest" << std::endl;
-  for (int i = 0; i < results["dest"].size(); ++i) {
+  for (std::size_t i = 0; i < results["dest"].size(); ++i) {
     std::cout << "  " << results["dest"].at(i) << std::endl;
   }
 }
