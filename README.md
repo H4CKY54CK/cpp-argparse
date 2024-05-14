@@ -51,3 +51,5 @@ Producing this output:
       two
     dest
       three
+
+As a result of: `./a.out one two three`
