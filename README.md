@@ -9,9 +9,9 @@ First, you create a parser object with `ArgumentParser parser("program name")`.
 Then you create an `Argument` object `arg` (for example) with either the optional argument string flag or positional argument name, then change one of these class/instance members:
 - `.alt` - (string) Allows for adding a short flag option string
 - `.nargs` - (string) Defaults to "1", but can be set to an integer or one of:
- - \? - Accepts 0 or 1 arguments
- - \* - Accepts 0 or more arguments
- - \+ - Accepts 1 or more arguments
+  - \? - Accepts 0 or 1 arguments
+  - \* - Accepts 0 or more arguments
+  - \+ - Accepts 1 or more arguments
 
 Then you add the Argument object to the parser with `parser.add_argument(arg)`
 
